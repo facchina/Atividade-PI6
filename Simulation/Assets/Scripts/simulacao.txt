@@ -1,0 +1,11 @@
+Um petshop recebe em média um pet a cada cinco minutos. Quando um pet chega no estabelecimento, o dono dele pode solicitar um banho simples [A], ou um banho com tosa [AB].
+
+O petshop conta com quatro funcionários para realizar os banhos. Todos eles são capazes de dar banho, mas somente dois deles são especializados em tosar.
+
+O tempo para dar banho no pet é de 5 minutos e de tosa 10 minutos, o intervalo de tempo que um funcionário termina de atender um cliente e vai para o próximo é de 1 minuto.
+ 
+
+Atividade: 
+
+Construir um modelo computacional do problema acima descrito e estudar alguns parametros relavantes do sistema: tempo total dentro do petshop, tempo de espera para ser atendido, tempo sendo atendido.
+
