@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using SimulationEnum;
+using System.IO;
 
+using SimulationEnum;
 static class Constants
 {
     /// <summary>
@@ -105,27 +106,12 @@ public class Simulation : MonoBehaviour
             }
         }
         else if (workPeriodEnded) {
-            Debug.Log("qtd de clientes atendidos no dia: " + ClientsServed.Count);
-            foreach (var c in _clientsServed)
-            {
-                print("id cliente: " + c.Id + "pedido: " + c.Request + " chegada: " + c.ArrivedStoreTime + " saida: " + c.LeftStoreTime + " tempo de atendimento: " + (c.LeftStoreTime - c.AttendanceStartTime));
-            }
+            //Debug.Log("qtd de clientes atendidos no dia: " + ClientsServed.Count);
+            generateRecord();
         }
     }
     public IEnumerator clientsComing()
     {
-        //int id = 0;
-        //while (tick < workPeriod)
-        //{
-        //    if (typeOfSimulation == SimulationType.randomValues || id < numberClients)
-        //    {
-        //        clients.Enqueue(new Client(id++));
-        //    }
-        //    yield return new WaitForSeconds(1.0f * Constants.velocity);
-        //    tick++;
-        //}
-        //workPeriodEnded = true;
-
         int id = 0;
         while (true)
         {
@@ -163,6 +149,21 @@ public class Simulation : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void generateRecord() {
+        using (StreamWriter writer = new StreamWriter("record.csv"))
+        {
+            writer.WriteLine("{0}, {1}, {2}, {3}, {4}", "Id", "Solicitação", "Horário Chegada", "Horário Saída", "Duracao Atendimento");
+            foreach (var c in _clientsServed)
+            {
+                float duracaoAtendimento = c.LeftStoreTime - c.AttendanceStartTime;
+                writer.WriteLine("{0}, {1}, {2}, {3}, {4}", c.Id, c.Request, c.ArrivedStoreTime.ToString("F2"), c.LeftStoreTime.ToString("F2"), duracaoAtendimento.ToString("F2"));
+            }
+            
+        }
+
+        Debug.Log("arquivo gerado");
     }
 
     public GameObject createEmployee(string role)
