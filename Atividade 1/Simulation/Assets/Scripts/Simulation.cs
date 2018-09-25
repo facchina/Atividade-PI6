@@ -17,6 +17,10 @@ static class Constants
                                                               "AB", "AB", "AB", "AB", "A",
                                                               "A",  "B",  "A",  "A",  "AB", 
                                                               "B",  "B",  "A",  "AB", "B",
+                                                              "A",  "B",  "A",  "A",  "AB",
+                                                              "B",  "B",  "B",  "B",  "A",
+                                                              "AB", "A",  "AB", "AB", "B",
+                                                              "AB", "AB", "B",  "A",  "A"
                                                             };   
 
 }
@@ -60,7 +64,7 @@ public class Simulation : MonoBehaviour
     /// </summary>
     public bool workPeriodEnded = false;
     //defines the type of simulation
-    private SimulationType typeOfSimulation = SimulationType.randomValues;
+    private SimulationType typeOfSimulation = SimulationType.deterministic;
 
     private void Awake()
     {
@@ -154,11 +158,16 @@ public class Simulation : MonoBehaviour
     public void generateRecord() {
         using (StreamWriter writer = new StreamWriter("record.csv"))
         {
-            writer.WriteLine("{0}, {1}, {2}, {3}, {4}", "Id", "Solicitação", "Horário Chegada", "Horário Saída", "Duracao Atendimento");
+            writer.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}", "Id", 
+                "Solicitação", "Horário Chegada", "Horário Saída", "Duracao Atendimento", "Tempo na fila", "Tempo na loja");
             foreach (var c in _clientsServed)
             {
                 float duracaoAtendimento = c.LeftStoreTime - c.AttendanceStartTime;
-                writer.WriteLine("{0}, {1}, {2}, {3}, {4}", c.Id, c.Request, c.ArrivedStoreTime.ToString("F2"), c.LeftStoreTime.ToString("F2"), duracaoAtendimento.ToString("F2"));
+                float tempoFila = c.AttendanceStartTime - c.ArrivedStoreTime;
+                float tempoDentroLoja = c.LeftStoreTime - c.ArrivedStoreTime; 
+
+                writer.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}", c.Id, c.Request, c.ArrivedStoreTime.ToString(), 
+                    c.LeftStoreTime.ToString(), duracaoAtendimento.ToString(), tempoFila.ToString(), tempoDentroLoja.ToString());
             }
             
         }
