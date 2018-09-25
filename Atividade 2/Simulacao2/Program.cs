@@ -83,12 +83,12 @@ namespace Simulacao2
             }
 
             //contado o numero de vitorias e derrotas
-            Console.WriteLine("# Resultado dos jogos");
-            var resultados = jogos.GroupBy(x => x.resultadoRodadaFinal).Select(grp => new { resultadoJogo = grp.Key, total = grp.Count() });
-            foreach (var r in resultados)
-            {
-                Console.WriteLine("Resultado: " + r.resultadoJogo + " Total: " + r.total);
-            }
+            //Console.WriteLine("# Resultado dos jogos");
+            //var resultados = jogos.GroupBy(x => x.resultadoRodadaFinal).Select(grp => new { resultadoJogo = grp.Key, total = grp.Count() });
+            //foreach (var r in resultados)
+            //{
+            //    Console.WriteLine("Resultado: " + r.resultadoJogo + " Total: " + r.total);
+            //}
 
         }
 
